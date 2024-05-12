@@ -1,0 +1,15 @@
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\bin\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.exe
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\bin\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.deps.json
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\bin\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.runtimeconfig.json
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\bin\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.dll
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\bin\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.pdb
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.AssemblyInfoInputs.cache
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.AssemblyInfo.cs
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.sourcelink.json
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.dll
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\refint\Tubes3_TheTorturedInformaticsDepartment.dll
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.pdb
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\Tubes3_TheTorturedInformaticsDepartment.genruntimeconfig.cache
+C:\Users\PC\Documents\college\4.0\StrategiAlgoritma\Tubes3_TheTorturedInformaticsDepartment\obj\Debug\net8.0\ref\Tubes3_TheTorturedInformaticsDepartment.dll
