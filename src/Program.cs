@@ -74,11 +74,10 @@ class FingerprintRecognition
 
         Console.WriteLine("ASCII Data:");
         Console.WriteLine(asciiString.ToString());
-        
-        // Insert ASCII data into database
-        DB.Insert(asciiString.ToString(), imageName);
+    
 
         // cleanup
         bitmap.Dispose();
+        // ImageLoader.LoadImageFolder(".././dataset");
     }
 }
