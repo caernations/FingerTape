@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Text;
+using Tubes3_TheTorturedInformaticsDepartment;
 
 class FingerprintRecognition
 {
@@ -11,7 +12,7 @@ class FingerprintRecognition
         string directoryPath = "./fingerprints/";
         Console.WriteLine("Enter the image name (with .bmp extension):");
         string? imageName = Console.ReadLine();
-
+        
         if (imageName == null)
         {
             Console.WriteLine("No input provided.");
@@ -73,6 +74,9 @@ class FingerprintRecognition
 
         Console.WriteLine("ASCII Data:");
         Console.WriteLine(asciiString.ToString());
+        
+        // Insert ASCII data into database
+        DB.Insert(asciiString.ToString(), imageName);
 
         // cleanup
         bitmap.Dispose();
