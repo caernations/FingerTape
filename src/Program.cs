@@ -41,6 +41,7 @@
             }
 
             string originalName = BahasaAlay.AlayToOriginal(alayName);
+            originalName = BahasaAlay.GetMostSimilarOriginalName(originalName);
 
             Console.WriteLine("Nama orisinil: " + originalName);
         }
