@@ -21,6 +21,8 @@ namespace GUI
 {
     public partial class MainWindow : Window
     {
+        private string ascii;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +32,9 @@ namespace GUI
 
             // Initialize the SelectedImage property
             SelectedImage = this.FindControl<Avalonia.Controls.Image>("SelectedImage");
+            
+            // Initialize the ResultImage property
+            ResultImage = this.FindControl<Avalonia.Controls.Image>("ResultImage");
 
             // Initialize the AlgorithmButton property
             AlgorithmButton = this.FindControl<SplitButton>("AlgorithmButton");
@@ -95,13 +100,13 @@ namespace GUI
             if (result != null && result.Length > 0)
             {
 
-                using (var fileStreamA = new FileStream(result[0], FileMode.Open))
+                using (var fileStreamA = new FileStream(result[0], FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     bitmapA = new Avalonia.Media.Imaging.Bitmap(fileStreamA);
                     SelectedImage.Source = bitmapA;
                 }
 
-                using (var fileStream = new FileStream(result[0], FileMode.Open))
+                using (var fileStream = new FileStream(result[0], FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     var bitmap = new System.Drawing.Bitmap(fileStream);
                     SelectedImage.Source = bitmapA;
@@ -133,7 +138,7 @@ namespace GUI
                         asciiString.AppendLine();
                     }
 
-                    string ascii = asciiString.ToString();
+                    ascii = asciiString.ToString();
 
 
                     // // Display binary and ASCII data
@@ -157,69 +162,98 @@ namespace GUI
 
             List<string> paths = DB.SelectAllPath();
             bool isMatchFound = false;
-
+            
+            double highestMatchPercentage = 0;
+            string highestMatchImagePath = null;
 
             foreach (string path in paths)
             {
+                // Construct the full path to the image file
+                string imagePath = System.IO.Path.Combine("../../../../../", path);
 
-                // Load match image and convert to binary and ASCII
-                System.Drawing.Bitmap matchBitmap = new System.Drawing.Bitmap("../" + path);
-                StringBuilder matchBinaryString = new StringBuilder();
-                StringBuilder matchAsciiString = new StringBuilder();
-
-                for (int y = 0; y < matchBitmap.Height; y++)
+                if (!File.Exists(imagePath))
                 {
-                    StringBuilder binaryLine = new StringBuilder();
-                    for (int x = 0; x < matchBitmap.Width; x++)
-                    {
-                        System.Drawing.Color pixel = matchBitmap.GetPixel(x, y);
-                        binaryLine.Append(pixel.GetBrightness() < 0.5 ? "1" : "0");
-                    }
+                    Console.WriteLine($"File not found: {imagePath}");
+                    continue;
+                }
 
-                    matchBinaryString.AppendLine(binaryLine.ToString());
+                try
+                {
+                    // Load match image and convert to binary and ASCII
+                    System.Drawing.Bitmap matchBitmap = new System.Drawing.Bitmap(imagePath);
+                    StringBuilder matchBinaryString = new StringBuilder();
+                    StringBuilder matchAsciiString = new StringBuilder();
 
-                    for (int i = 0; i < binaryLine.Length; i += 8)
+                    for (int y = 0; y < matchBitmap.Height; y++)
                     {
-                        if (i + 8 <= binaryLine.Length)
+                        StringBuilder binaryLine = new StringBuilder();
+                        for (int x = 0; x < matchBitmap.Width; x++)
                         {
-                            string byteString = binaryLine.ToString(i, 8);
-                            matchAsciiString.Append((char)Convert.ToInt32(byteString, 2));
+                            System.Drawing.Color pixel = matchBitmap.GetPixel(x, y);
+                            binaryLine.Append(pixel.GetBrightness() < 0.5 ? "1" : "0");
                         }
+
+                        matchBinaryString.AppendLine(binaryLine.ToString());
+
+                        for (int i = 0; i < binaryLine.Length; i += 8)
+                        {
+                            if (i + 8 <= binaryLine.Length)
+                            {
+                                string byteString = binaryLine.ToString(i, 8);
+                                matchAsciiString.Append((char)Convert.ToInt32(byteString, 2));
+                            }
+                        }
+                        matchAsciiString.AppendLine();
                     }
-                    matchAsciiString.AppendLine();
+
+                    int matchCount = 0;
+                    int totalCount = Math.Min(ascii.Length, matchAsciiString.Length);
+
+                    // Determine algorithm to use
+                    if (algorithm.ToUpper() == "KMP")
+                    {
+                        isMatchFound = KnuthMorrisPratt(matchAsciiString.ToString(), ascii.ToString());
+                    }
+                    else if (algorithm.ToUpper() == "BM")
+                    {
+                        isMatchFound = BoyerMoore(matchAsciiString.ToString(), ascii.ToString());
+                    }
+
+                    if (isMatchFound)
+                    {
+                        matchCount = GetMatchCount(ascii.ToString(), matchAsciiString.ToString());
+                        Console.WriteLine("Match found.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No match found.");
+                    }
+
+                    double matchPercentage = (double)matchCount / totalCount * 100;
+                    Console.WriteLine($"Match percentage: {matchPercentage:F2}%");
+                    
+                    if (matchPercentage > highestMatchPercentage)
+                    {
+                        highestMatchPercentage = matchPercentage;
+                        highestMatchImagePath = imagePath;
+                    }
                 }
-
-                int matchCount = 0;
-                int totalCount = Math.Min(asciiString.Length, matchAsciiString.Length);
-
-
-
-                // nat nanti asciiStringnya itu dari input image nya
-                if (algorithm.ToUpper() == "KMP")
+                catch (Exception ex)
                 {
-                    isMatchFound = KnuthMorrisPratt(matchAsciiString.ToString(), asciiString.ToString());
+                    Console.WriteLine($"An error occurred while processing the image at {imagePath}: {ex.Message}");
                 }
-                else if (algorithm.ToUpper() == "BM")
-                {
-                    isMatchFound = BoyerMoore(matchAsciiString.ToString(), asciiString.ToString());
-                }
-
-                if (isMatchFound)
-                {
-                    matchCount = GetMatchCount(asciiString.ToString(), matchAsciiString.ToString());
-                    Console.WriteLine("Match found.");
-                }
-                else
-                {
-                    Console.WriteLine("No match found.");
-                }
-
-                double matchPercentage = (double)matchCount / totalCount * 100;
-                Console.WriteLine($"Match percentage: {matchPercentage:F2}%");
             }
-
-
+            
+            if (highestMatchImagePath != null)
+            {
+                using (var fileStream = new FileStream(highestMatchImagePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    var bitmap = new Avalonia.Media.Imaging.Bitmap(fileStream);
+                    ResultImage.Source = bitmap;
+                }
+            }
         }
+
 
         private void HomeButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {

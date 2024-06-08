@@ -124,7 +124,9 @@
                                         Background="#D6E6F2"
                                         Margin="15,15,0,0"
                                         CornerRadius="30">
-                                    
+                                    <Grid>
+                                        <Image Name="ResultImage" /> 
+                                    </Grid>
                                 </Border>
                                 <SplitButton Grid.Row="1" 
                                              Grid.Column="1"
@@ -165,7 +167,8 @@
                                         CornerRadius="30"
                                         Foreground="Black"
                                         FontFamily="{StaticResource MerriweatherFont}"
-                                        Margin="59,60,0,0">
+                                        Margin="59,60,0,0"
+                                        Click="SubmitButton_Click">
                                     Submit
                                 </Button>
                             </Grid>

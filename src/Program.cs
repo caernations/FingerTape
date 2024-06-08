@@ -8,7 +8,7 @@ class FingerprintRecognition
     static void Main(string[] args)
     {
         // Step 1: Input image name (bitmap)
-        string directoryPath = "./fingerprints/";
+        string directoryPath = "../test/";
         Console.WriteLine("Enter the image name (with .bmp extension):");
         string? imageName = Console.ReadLine();
         
