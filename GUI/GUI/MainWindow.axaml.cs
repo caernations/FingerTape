@@ -35,6 +35,12 @@ namespace GUI
             
             // Initialize the ResultImage property
             ResultImage = this.FindControl<Avalonia.Controls.Image>("ResultImage");
+            
+            // Initialize the Percentage property
+            Percentage = this.FindControl<TextBlock>("Percentage");
+            
+            // Initialize the Time property
+            Time = this.FindControl<TextBlock>("Time");
 
             // Initialize the AlgorithmButton property
             AlgorithmButton = this.FindControl<SplitButton>("AlgorithmButton");
@@ -166,6 +172,8 @@ namespace GUI
             double highestMatchPercentage = 0;
             string highestMatchImagePath = null;
 
+            var startTime = DateTime.Now;
+
             foreach (string path in paths)
             {
                 // Construct the full path to the image file
@@ -244,6 +252,9 @@ namespace GUI
                 }
             }
             
+            var endTime = DateTime.Now;
+            var executionTime = endTime - startTime;
+            
             if (highestMatchImagePath != null)
             {
                 using (var fileStream = new FileStream(highestMatchImagePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -252,6 +263,10 @@ namespace GUI
                     ResultImage.Source = bitmap;
                 }
             }
+            // Update the TextBlock controls with the highestMatchPercentage and the execution time
+            Percentage.Text = $"Match Percentage: {highestMatchPercentage:F2}%";
+            Time.Text = $"Execution Time: {executionTime.TotalMilliseconds} ms";
+
         }
 
 
