@@ -12,6 +12,9 @@ using Avalonia.Animation.Easings;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Drawing;
+using System.IO;
+using System.Text;
 
 namespace GUI
 {
@@ -25,7 +28,7 @@ namespace GUI
             this.PointerPressed += OnPointerPressed;
 
             // Initialize the SelectedImage property
-            SelectedImage = this.FindControl<Image>("SelectedImage");
+            SelectedImage = this.FindControl<Avalonia.Controls.Image>("SelectedImage");
 
             // Initialize the AlgorithmButton property
             AlgorithmButton = this.FindControl<SplitButton>("AlgorithmButton");
@@ -89,8 +92,42 @@ namespace GUI
             var result = await dialog.ShowAsync(this);
             if (result != null && result.Length > 0)
             {
-                var bitmap = new Bitmap(new FileStream(result[0], FileMode.Open));
-                SelectedImage.Source = bitmap;
+                var bitmapA = new Avalonia.Media.Imaging.Bitmap(new FileStream(result[0], FileMode.Open));
+                var bitmap = new System.Drawing.Bitmap(new FileStream(result[0], FileMode.Open));
+                SelectedImage.Source = bitmapA;
+
+                // New code starts here
+                StringBuilder binaryString = new StringBuilder();
+                StringBuilder asciiString = new StringBuilder();
+
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    StringBuilder binaryLine = new StringBuilder();
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        System.Drawing.Color pixel = bitmap.GetPixel(x, y);
+                        binaryLine.Append(pixel.GetBrightness() < 0.5 ? "1" : "0");
+                    }
+
+                    binaryString.AppendLine(binaryLine.ToString());
+
+                    for (int i = 0; i < binaryLine.Length; i += 8)
+                    {
+                        if (i + 8 <= binaryLine.Length)
+                        {
+                            string byteString = binaryLine.ToString(i, 8);
+                            asciiString.Append((char)Convert.ToInt32(byteString, 2));
+                        }
+                    }
+                    asciiString.AppendLine();
+                }
+
+                // Display binary and ASCII data
+                Console.WriteLine("Binary Data:");
+                Console.WriteLine(binaryString.ToString());
+                Console.WriteLine("ASCII Data:");
+                Console.WriteLine(asciiString.ToString());
+                // New code ends here
             }
         }
 
