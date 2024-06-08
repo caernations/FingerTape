@@ -90,44 +90,56 @@ namespace GUI
                 Filters = new List<FileDialogFilter> { new FileDialogFilter { Name = "Images", Extensions = new List<string> { "jpg", "png", "bmp" } } }
             };
             var result = await dialog.ShowAsync(this);
+            Avalonia.Media.Imaging.Bitmap bitmapA;
             if (result != null && result.Length > 0)
             {
-                var bitmapA = new Avalonia.Media.Imaging.Bitmap(new FileStream(result[0], FileMode.Open));
-                var bitmap = new System.Drawing.Bitmap(new FileStream(result[0], FileMode.Open));
-                SelectedImage.Source = bitmapA;
-
-                // New code starts here
-                StringBuilder binaryString = new StringBuilder();
-                StringBuilder asciiString = new StringBuilder();
-
-                for (int y = 0; y < bitmap.Height; y++)
+                
+                using (var fileStreamA = new FileStream(result[0], FileMode.Open))
                 {
-                    StringBuilder binaryLine = new StringBuilder();
-                    for (int x = 0; x < bitmap.Width; x++)
-                    {
-                        System.Drawing.Color pixel = bitmap.GetPixel(x, y);
-                        binaryLine.Append(pixel.GetBrightness() < 0.5 ? "1" : "0");
-                    }
-
-                    binaryString.AppendLine(binaryLine.ToString());
-
-                    for (int i = 0; i < binaryLine.Length; i += 8)
-                    {
-                        if (i + 8 <= binaryLine.Length)
-                        {
-                            string byteString = binaryLine.ToString(i, 8);
-                            asciiString.Append((char)Convert.ToInt32(byteString, 2));
-                        }
-                    }
-                    asciiString.AppendLine();
+                    bitmapA = new Avalonia.Media.Imaging.Bitmap(fileStreamA);
+                    SelectedImage.Source = bitmapA;
                 }
 
-                // Display binary and ASCII data
-                Console.WriteLine("Binary Data:");
-                Console.WriteLine(binaryString.ToString());
-                Console.WriteLine("ASCII Data:");
-                Console.WriteLine(asciiString.ToString());
-                // New code ends here
+                using (var fileStream = new FileStream(result[0], FileMode.Open))
+                {
+                    var bitmap = new System.Drawing.Bitmap(fileStream);
+                    SelectedImage.Source = bitmapA;
+
+                    // New code starts here
+                    StringBuilder binaryString = new StringBuilder();
+                    StringBuilder asciiString = new StringBuilder();
+
+                    for (int y = 0; y < bitmap.Height; y++)
+                    {
+                        StringBuilder binaryLine = new StringBuilder();
+                        for (int x = 0; x < bitmap.Width; x++)
+                        {
+                            System.Drawing.Color pixel = bitmap.GetPixel(x, y);
+                            binaryLine.Append(pixel.GetBrightness() < 0.5 ? "1" : "0");
+                        }
+
+                        binaryString.AppendLine(binaryLine.ToString());
+
+                        for (int i = 0; i < binaryLine.Length; i += 8)
+                        {
+                            if (i + 8 <= binaryLine.Length)
+                            {
+                                string byteString = binaryLine.ToString(i, 8);
+                                asciiString.Append((char)Convert.ToInt32(byteString, 2));
+                            }
+                        }
+
+                        asciiString.AppendLine();
+                    }
+
+
+                    // Display binary and ASCII data
+                    Console.WriteLine("Binary Data:");
+                    Console.WriteLine(binaryString.ToString());
+                    Console.WriteLine("ASCII Data:");
+                    Console.WriteLine(asciiString.ToString());
+                    // New code ends here
+                }
             }
         }
 
