@@ -32,13 +32,13 @@ namespace GUI
 
             // Initialize the SelectedImage property
             SelectedImage = this.FindControl<Avalonia.Controls.Image>("SelectedImage");
-            
+
             // Initialize the ResultImage property
             ResultImage = this.FindControl<Avalonia.Controls.Image>("ResultImage");
-            
+
             // Initialize the Percentage property
             Percentage = this.FindControl<TextBlock>("Percentage");
-            
+
             // Initialize the Time property
             Time = this.FindControl<TextBlock>("Time");
 
@@ -162,13 +162,13 @@ namespace GUI
 
         private void SubmitButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            // Console.WriteLine("Submit button clicked.");
             // get algorithm choice
             string algorithm = AlgorithmButton.Content.ToString();
-            Console.WriteLine(algorithm);
 
             List<string> paths = DB.SelectAllPath();
             bool isMatchFound = false;
-            
+
             double highestMatchPercentage = 0;
             string highestMatchImagePath = null;
 
@@ -177,7 +177,7 @@ namespace GUI
             foreach (string path in paths)
             {
                 // Construct the full path to the image file
-                string imagePath = System.IO.Path.Combine("../../../../../", path);
+                string imagePath = System.IO.Path.Combine("../../", path);
 
                 if (!File.Exists(imagePath))
                 {
@@ -238,12 +238,12 @@ namespace GUI
                     }
 
                     double matchPercentage = (double)matchCount / totalCount * 100;
-                    Console.WriteLine($"Match percentage: {matchPercentage:F2}%");
-                    
+
                     if (matchPercentage > highestMatchPercentage)
                     {
                         highestMatchPercentage = matchPercentage;
                         highestMatchImagePath = imagePath;
+                        Console.WriteLine($"New highest match percentage: {highestMatchPercentage:F2}%");
                     }
                 }
                 catch (Exception ex)
@@ -251,10 +251,10 @@ namespace GUI
                     Console.WriteLine($"An error occurred while processing the image at {imagePath}: {ex.Message}");
                 }
             }
-            
+
             var endTime = DateTime.Now;
             var executionTime = endTime - startTime;
-            
+
             if (highestMatchImagePath != null)
             {
                 using (var fileStream = new FileStream(highestMatchImagePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -266,7 +266,6 @@ namespace GUI
             // Update the TextBlock controls with the highestMatchPercentage and the execution time
             Percentage.Text = $"Match Percentage: {highestMatchPercentage:F2}%";
             Time.Text = $"Execution Time: {executionTime.TotalMilliseconds} ms";
-
         }
 
 
