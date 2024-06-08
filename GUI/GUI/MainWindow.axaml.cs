@@ -93,7 +93,7 @@ namespace GUI
             Avalonia.Media.Imaging.Bitmap bitmapA;
             if (result != null && result.Length > 0)
             {
-                
+
                 using (var fileStreamA = new FileStream(result[0], FileMode.Open))
                 {
                     bitmapA = new Avalonia.Media.Imaging.Bitmap(fileStreamA);
@@ -132,15 +132,58 @@ namespace GUI
                         asciiString.AppendLine();
                     }
 
+                    string ascii = asciiString.ToString();
 
-                    // Display binary and ASCII data
-                    Console.WriteLine("Binary Data:");
-                    Console.WriteLine(binaryString.ToString());
-                    Console.WriteLine("ASCII Data:");
-                    Console.WriteLine(asciiString.ToString());
-                    // New code ends here
+
+                    // // Display binary and ASCII data
+                    // Console.WriteLine("Binary Data:");
+                    // Console.WriteLine(binaryString.ToString());
+                    // Console.WriteLine("ASCII Data:");
+                    // Console.WriteLine(asciiString.ToString());
+                    // // New code ends here
+
+
+                }
+
+            }
+        }
+
+        private void SubmitButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            // get algorithm choice
+            string algorithm = AlgorithmButton.Content.ToString();
+            Console.WriteLine(algorithm);
+
+            List<string> = DB.SelectAllPath();
+            bool isMatchFound = false;
+
+            foreach (string path in paths)
+            {
+                if (algorithm.ToUpper() == "KMP")
+                {
+                    isMatchFound = KnuthMorrisPratt(matchAsciiString.ToString(), asciiString.ToString());
+                }
+                else if (algorithm.ToUpper() == "BM")
+                {
+                    isMatchFound = BoyerMoore(matchAsciiString.ToString(), asciiString.ToString());
                 }
             }
+
+            if (isMatchFound)
+            {
+                matchCount = GetMatchCount(asciiString.ToString(), matchAsciiString.ToString());
+                Console.WriteLine("Match found.");
+            }
+            else
+            {
+                Console.WriteLine("No match found.");
+            }
+
+            double matchPercentage = (double)matchCount / totalCount * 100;
+            Console.WriteLine($"Match percentage: {matchPercentage:F2}%");
+
+            bitmap.Dispose();
+            matchBitmap.Dispose();
         }
 
         private void HomeButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
