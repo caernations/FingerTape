@@ -51,7 +51,66 @@
     }
 }
 
-// MAIN PROGRAM ASLI
+// MAIN PROGRAM BARU BARU BARUUU
+
+// using System;
+
+// class Program
+// {
+//     static void Main(string[] args)
+//     {
+//         Console.WriteLine("Choose algorithm (1 for Boyer-Moore, 2 for Knuth-Morris-Pratt):");
+//         int choice = int.Parse(Console.ReadLine());
+
+//         Console.WriteLine("Enter the text:");
+//         string text = Console.ReadLine();
+
+//         Console.WriteLine("Enter the pattern:");
+//         string pattern = Console.ReadLine();
+
+//         if (choice == 1)
+//         {
+//             BoyerMoore bm = new BoyerMoore(pattern);
+//             int matchIndex = bm.Search(text);
+
+//             if (matchIndex != -1)
+//             {
+//                 Console.WriteLine($"Pattern found at index {matchIndex}");
+//             }
+//             else
+//             {
+//                 Console.WriteLine("Pattern not found");
+//             }
+
+//             double similarityPercentage = bm.CalculateSimilarity(text);
+//             Console.WriteLine($"Similarity: {similarityPercentage}%");
+//         }
+//         else if (choice == 2)
+//         {
+//             KnuthMorrisPratt kmp = new KnuthMorrisPratt(pattern);
+//             int matchIndex = kmp.Search(text);
+
+//             if (matchIndex != -1)
+//             {
+//                 Console.WriteLine($"Pattern found at index {matchIndex}");
+//             }
+//             else
+//             {
+//                 Console.WriteLine("Pattern not found");
+//             }
+
+//             double similarityPercentage = kmp.CalculateSimilarity(text);
+//             Console.WriteLine($"Similarity: {similarityPercentage}%");
+//         }
+//         else
+//         {
+//             Console.WriteLine("Invalid choice");
+//         }
+//     }
+// }
+
+
+// MAIN PROGRAM ASLI LAMA
 // using System;
 // using System.Drawing;
 // using System.IO;
