@@ -15,6 +15,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using Tubes3_TheTorturedInformaticsDepartment;
 
 namespace GUI
 {
@@ -154,11 +155,46 @@ namespace GUI
             string algorithm = AlgorithmButton.Content.ToString();
             Console.WriteLine(algorithm);
 
-            List<string> = DB.SelectAllPath();
+            List<string> paths = DB.SelectAllPath();
             bool isMatchFound = false;
+
 
             foreach (string path in paths)
             {
+
+                // Load match image and convert to binary and ASCII
+                System.Drawing.Bitmap matchBitmap = new System.Drawing.Bitmap("../" + path);
+                StringBuilder matchBinaryString = new StringBuilder();
+                StringBuilder matchAsciiString = new StringBuilder();
+
+                for (int y = 0; y < matchBitmap.Height; y++)
+                {
+                    StringBuilder binaryLine = new StringBuilder();
+                    for (int x = 0; x < matchBitmap.Width; x++)
+                    {
+                        System.Drawing.Color pixel = matchBitmap.GetPixel(x, y);
+                        binaryLine.Append(pixel.GetBrightness() < 0.5 ? "1" : "0");
+                    }
+
+                    matchBinaryString.AppendLine(binaryLine.ToString());
+
+                    for (int i = 0; i < binaryLine.Length; i += 8)
+                    {
+                        if (i + 8 <= binaryLine.Length)
+                        {
+                            string byteString = binaryLine.ToString(i, 8);
+                            matchAsciiString.Append((char)Convert.ToInt32(byteString, 2));
+                        }
+                    }
+                    matchAsciiString.AppendLine();
+                }
+
+                int matchCount = 0;
+                int totalCount = Math.Min(asciiString.Length, matchAsciiString.Length);
+
+
+
+                // nat nanti asciiStringnya itu dari input image nya
                 if (algorithm.ToUpper() == "KMP")
                 {
                     isMatchFound = KnuthMorrisPratt(matchAsciiString.ToString(), asciiString.ToString());
@@ -167,23 +203,22 @@ namespace GUI
                 {
                     isMatchFound = BoyerMoore(matchAsciiString.ToString(), asciiString.ToString());
                 }
+
+                if (isMatchFound)
+                {
+                    matchCount = GetMatchCount(asciiString.ToString(), matchAsciiString.ToString());
+                    Console.WriteLine("Match found.");
+                }
+                else
+                {
+                    Console.WriteLine("No match found.");
+                }
+
+                double matchPercentage = (double)matchCount / totalCount * 100;
+                Console.WriteLine($"Match percentage: {matchPercentage:F2}%");
             }
 
-            if (isMatchFound)
-            {
-                matchCount = GetMatchCount(asciiString.ToString(), matchAsciiString.ToString());
-                Console.WriteLine("Match found.");
-            }
-            else
-            {
-                Console.WriteLine("No match found.");
-            }
 
-            double matchPercentage = (double)matchCount / totalCount * 100;
-            Console.WriteLine($"Match percentage: {matchPercentage:F2}%");
-
-            bitmap.Dispose();
-            matchBitmap.Dispose();
         }
 
         private void HomeButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -215,5 +250,121 @@ namespace GUI
             // Show the AboutUsPanel
             AboutUsPanel.IsVisible = true;
         }
+
+        // Knuth-Morris-Pratt (KMP) algorithm
+        static bool KnuthMorrisPratt(string text, string pattern)
+        {
+            int[] lps = ComputeLPSArray(pattern);
+            int i = 0; // index for text
+            int j = 0; // index for pattern
+            while (i < text.Length)
+            {
+                if (pattern[j] == text[i])
+                {
+                    j++;
+                    i++;
+                }
+                if (j == pattern.Length)
+                {
+                    return true;
+                }
+                else if (i < text.Length && pattern[j] != text[i])
+                {
+                    if (j != 0)
+                    {
+                        j = lps[j - 1];
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            return false;
+        }
+
+        static int[] ComputeLPSArray(string pattern)
+        {
+            int[] lps = new int[pattern.Length];
+            int length = 0;
+            int i = 1;
+            lps[0] = 0;
+            while (i < pattern.Length)
+            {
+                if (pattern[i] == pattern[length])
+                {
+                    length++;
+                    lps[i] = length;
+                    i++;
+                }
+                else
+                {
+                    if (length != 0)
+                    {
+                        length = lps[length - 1];
+                    }
+                    else
+                    {
+                        lps[i] = 0;
+                        i++;
+                    }
+                }
+            }
+            return lps;
+        }
+
+        // Boyer-Moore (BM) algorithm
+        static bool BoyerMoore(string text, string pattern)
+        {
+            int[] badChar = BuildBadCharTable(pattern);
+            int shift = 0;
+            while (shift <= (text.Length - pattern.Length))
+            {
+                int j = pattern.Length - 1;
+                while (j >= 0 && pattern[j] == text[shift + j])
+                {
+                    j--;
+                }
+                if (j < 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    shift += Math.Max(1, j - badChar[text[shift + j]]);
+                }
+            }
+            return false;
+        }
+
+        static int[] BuildBadCharTable(string pattern)
+        {
+            int[] badChar = new int[256];
+            for (int i = 0; i < 256; i++)
+            {
+                badChar[i] = -1;
+            }
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                badChar[(int)pattern[i]] = i;
+            }
+            return badChar;
+        }
+
+        // Function to get the number of matching characters
+        static int GetMatchCount(string text, string pattern)
+        {
+            int matchCount = 0;
+            for (int i = 0; i < Math.Min(text.Length, pattern.Length); i++)
+            {
+                if (text[i] == pattern[i])
+                {
+                    matchCount++;
+                }
+            }
+            return matchCount;
+        }
     }
+
+
 }
