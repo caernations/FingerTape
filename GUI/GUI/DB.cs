@@ -84,7 +84,7 @@ public class DB
     public static string GetNamaFromPath(string path)
     {
         string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
-        string query = "SELECT name FROM sidik_jari WHERE path = @path"; // Replace 'your_table' and 'name' with your actual table and column names
+        string query = "SELECT nama FROM sidik_jari WHERE berkas_citra = @path"; // Replace 'your_table' and 'name' with your actual table and column names
 
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
