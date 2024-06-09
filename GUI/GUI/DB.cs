@@ -6,7 +6,7 @@ namespace Tubes3_TheTorturedInformaticsDepartment
 
     public class DB
     {
-        private static string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=qwerty29;";
+        private static string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
 
         public static void Insert(string ascii, string name)
         {

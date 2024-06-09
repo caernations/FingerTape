@@ -145,16 +145,6 @@ namespace GUI
                     }
 
                     ascii = asciiString.ToString();
-
-
-                    // // Display binary and ASCII data
-                    // Console.WriteLine("Binary Data:");
-                    // Console.WriteLine(binaryString.ToString());
-                    // Console.WriteLine("ASCII Data:");
-                    // Console.WriteLine(asciiString.ToString());
-                    // // New code ends here
-
-
                 }
 
             }
@@ -162,12 +152,10 @@ namespace GUI
 
         private void SubmitButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            // Console.WriteLine("Submit button clicked.");
             // get algorithm choice
             string algorithm = AlgorithmButton.Content.ToString();
 
             List<string> paths = DB.SelectAllPath();
-            bool isMatchFound = false;
 
             double highestMatchPercentage = 0;
             string highestMatchImagePath = null;
@@ -213,35 +201,49 @@ namespace GUI
                         }
                         matchAsciiString.AppendLine();
                     }
-
-                    int matchCount = 0;
-                    int totalCount = Math.Min(ascii.Length, matchAsciiString.Length);
+                    double similarityPercentage = 0;
 
                     // Determine algorithm to use
                     if (algorithm.ToUpper() == "KMP")
                     {
-                        isMatchFound = KnuthMorrisPratt(matchAsciiString.ToString(), ascii.ToString());
+
+                        KnuthMorrisPratt kmp = new KnuthMorrisPratt(ascii.ToString());
+                        int matchIndex = kmp.Search(matchAsciiString.ToString());
+
+                        if (matchIndex != -1)
+                        {
+                            Console.WriteLine($"Pattern found at index {matchIndex}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Pattern not found");
+                        }
+
+                        similarityPercentage = kmp.CalculateSimilarity(matchAsciiString.ToString());
+                        Console.WriteLine($"Similarity: {similarityPercentage}%");
                     }
                     else if (algorithm.ToUpper() == "BM")
                     {
-                        isMatchFound = BoyerMoore(matchAsciiString.ToString(), ascii.ToString());
+                        BoyerMoore bm = new BoyerMoore(ascii.ToString());
+                        int matchIndex = bm.Search(matchAsciiString.ToString());
+
+                        if (matchIndex != -1)
+                        {
+                            Console.WriteLine($"Pattern found at index {matchIndex}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Pattern not found");
+                        }
+
+                        similarityPercentage = bm.CalculateSimilarity(matchAsciiString.ToString());
+                        Console.WriteLine($"Similarity: {similarityPercentage}%");
                     }
 
-                    if (isMatchFound)
-                    {
-                        matchCount = GetMatchCount(ascii.ToString(), matchAsciiString.ToString());
-                        Console.WriteLine("Match found.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No match found.");
-                    }
 
-                    double matchPercentage = (double)matchCount / totalCount * 100;
-
-                    if (matchPercentage > highestMatchPercentage)
+                    if (similarityPercentage > highestMatchPercentage)
                     {
-                        highestMatchPercentage = matchPercentage;
+                        highestMatchPercentage = similarityPercentage;
                         highestMatchImagePath = imagePath;
                         Console.WriteLine($"New highest match percentage: {highestMatchPercentage:F2}%");
                     }
