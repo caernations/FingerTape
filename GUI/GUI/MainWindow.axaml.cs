@@ -12,8 +12,6 @@ using Avalonia.Animation.Easings;
 using System.Collections.Generic;
 using System.IO;
 using System;
-using System.Drawing;
-using System.IO;
 using System.Text;
 using Tubes3_TheTorturedInformaticsDepartment;
 
@@ -155,7 +153,7 @@ namespace GUI
             // get algorithm choice
             string algorithm = AlgorithmButton.Content.ToString();
 
-            List<string> paths = DB.SelectAllPath();
+            List<string> paths = DB.SelectAllPaths();
 
             double highestMatchPercentage = 0;
             string highestMatchImagePath = null;
@@ -165,7 +163,7 @@ namespace GUI
             foreach (string path in paths)
             {
                 // Construct the full path to the image file
-                string imagePath = System.IO.Path.Combine("../../", path);
+                string imagePath = System.IO.Path.Combine("../../../../../", path);
 
                 if (!File.Exists(imagePath))
                 {
@@ -252,6 +250,24 @@ namespace GUI
                 {
                     Console.WriteLine($"An error occurred while processing the image at {imagePath}: {ex.Message}");
                 }
+
+                List<List<string>> biodata = DB.GetBiodata();
+                foreach (List<string> data in biodata)
+                {
+                    if (BahasaAlay.AlayToOriginal(data[1]) == DB.GetNamaFromPath(highestMatchImagePath))
+                    {
+                        Console.WriteLine("Nama: " + data[1]);
+                        Console.WriteLine("Tempat Lahir: " + data[2]);
+                        Console.WriteLine("Tanggal Lahir: " + data[3]);
+                        Console.WriteLine("Jenis Kelamin: " + data[4]);
+                        Console.WriteLine("Golongan Darah: " + data[5]);
+                        Console.WriteLine("Alamat: " + data[6]);
+                        Console.WriteLine("Agama: " + data[7]);
+                        Console.WriteLine("Status Perkawinan: " + data[8]);
+                        Console.WriteLine("Pekerjaan: " + data[9]);
+                        Console.WriteLine("Kewarganegaraan: " + data[10]);
+                    }
+                }
             }
 
             var endTime = DateTime.Now;
@@ -290,131 +306,5 @@ namespace GUI
             // Show the FingerPanel
             FingerPanel.IsVisible = true;
         }
-
-        private void Person_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            // Hide all other panels
-            HomePanel.IsVisible = false;
-            FingerPanel.IsVisible = false;
-
-            // Show the AboutUsPanel
-            AboutUsPanel.IsVisible = true;
-        }
-
-        // Knuth-Morris-Pratt (KMP) algorithm
-        static bool KnuthMorrisPratt(string text, string pattern)
-        {
-            int[] lps = ComputeLPSArray(pattern);
-            int i = 0; // index for text
-            int j = 0; // index for pattern
-            while (i < text.Length)
-            {
-                if (pattern[j] == text[i])
-                {
-                    j++;
-                    i++;
-                }
-                if (j == pattern.Length)
-                {
-                    return true;
-                }
-                else if (i < text.Length && pattern[j] != text[i])
-                {
-                    if (j != 0)
-                    {
-                        j = lps[j - 1];
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-            }
-            return false;
-        }
-
-        static int[] ComputeLPSArray(string pattern)
-        {
-            int[] lps = new int[pattern.Length];
-            int length = 0;
-            int i = 1;
-            lps[0] = 0;
-            while (i < pattern.Length)
-            {
-                if (pattern[i] == pattern[length])
-                {
-                    length++;
-                    lps[i] = length;
-                    i++;
-                }
-                else
-                {
-                    if (length != 0)
-                    {
-                        length = lps[length - 1];
-                    }
-                    else
-                    {
-                        lps[i] = 0;
-                        i++;
-                    }
-                }
-            }
-            return lps;
-        }
-
-        // Boyer-Moore (BM) algorithm
-        static bool BoyerMoore(string text, string pattern)
-        {
-            int[] badChar = BuildBadCharTable(pattern);
-            int shift = 0;
-            while (shift <= (text.Length - pattern.Length))
-            {
-                int j = pattern.Length - 1;
-                while (j >= 0 && pattern[j] == text[shift + j])
-                {
-                    j--;
-                }
-                if (j < 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    shift += Math.Max(1, j - badChar[text[shift + j]]);
-                }
-            }
-            return false;
-        }
-
-        static int[] BuildBadCharTable(string pattern)
-        {
-            int[] badChar = new int[256];
-            for (int i = 0; i < 256; i++)
-            {
-                badChar[i] = -1;
-            }
-            for (int i = 0; i < pattern.Length; i++)
-            {
-                badChar[(int)pattern[i]] = i;
-            }
-            return badChar;
-        }
-
-        // Function to get the number of matching characters
-        static int GetMatchCount(string text, string pattern)
-        {
-            int matchCount = 0;
-            for (int i = 0; i < Math.Min(text.Length, pattern.Length); i++)
-            {
-                if (text[i] == pattern[i])
-                {
-                    matchCount++;
-                }
-            }
-            return matchCount;
-        }
     }
-
-
 }
