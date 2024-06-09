@@ -4,13 +4,11 @@
 
 > FingerTape is a robust and user-friendly desktop application designed for individual biometric identification using fingerprint images. Developed with C# and Visual Studio .NET, FingerTape leverages advanced pattern matching algorithms, including Boyer-Moore and Knuth-Morris-Pratt, to accurately and efficiently match fingerprint patterns against a comprehensive database.
 
-
-__ <img src="./fingertape.jpg" alt="drawing" width="200"/>
-
+\_\_ <img src="./fingertape.jpg" alt="drawing" width="200"/>
 
 > **Knuth Morris Pratt Algorithm**
 
-> The KMP algorithm is an efficient string matching technique designed to find occurrences of a "pattern" string within a "text" string. It preprocesses the pattern to create a partial match table (also known as the "failure function"), which stores the lengths of the longest prefixes that are also suffixes. This preprocessing allows the algorithm to skip unnecessary comparisons, thus improving the search time. 
+> The KMP algorithm is an efficient string matching technique designed to find occurrences of a "pattern" string within a "text" string. It preprocesses the pattern to create a partial match table (also known as the "failure function"), which stores the lengths of the longest prefixes that are also suffixes. This preprocessing allows the algorithm to skip unnecessary comparisons, thus improving the search time.
 
 > **Boyer Moore Algorithm**
 
@@ -26,90 +24,38 @@ __ <img src="./fingertape.jpg" alt="drawing" width="200"/>
 ## Technologies Used
 
 - C#
-- dotnet
--
+- Avalonia
+- .NET
 
 ## Pre Requirement
 
-- dotnet
+- .NET 8.0 or higher installed
 
 ## How To Run
 
-Run both of the frontend and backend
-
-Then go to [LookAt](http://localhost:3000/)
-
-### Frontend
-
-Go to 'frontend' directory
+Clone the project using the following command:
 
 ```bash
-cd frontend
+git clone https://github.com/caernations/Tubes3_TheTorturedInformaticsDepartment.git
 ```
 
-#### Install Dependencies
-
-Install the required dependencies
+Navigate to the project directory using the following command:
 
 ```bash
-npm install
+cd src
 ```
 
-#### Run
+Build the project using the following command:
 
 ```bash
-npm run dev
+dotnet build
 ```
 
-### Backend
-
-Go to 'backend' directory
+Run the project using the following command:
 
 ```bash
-cd backend
+dotnet run
 ```
-
-#### Setup Virtual Environtmet
-
-Install venv
-
-```bash
-pip install venv
-```
-
-Create venv
-
-```bash
-virtualenv venv
-```
-
-Activate venv
-
-```bash
-source venv/Scripts/activate  # Windows (bash)
-source venv/bin/activate      # WSL / Linux / Mac
-```
-
-#### Install Dependencies
-
-Install the required dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-#### Run
-
-```bash
-python app.py
-```
-
-#### Deactivate Virtual Environment
-
-```bash
-deactivate
-```
-
 
 ## Authors
 
