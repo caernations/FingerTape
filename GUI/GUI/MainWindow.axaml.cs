@@ -41,23 +41,23 @@ namespace GUI
             Time = this.FindControl<TextBlock>("Time");
 
             Nama = this.FindControl<TextBlock>("Nama");
-            
+
             TempatLahir = this.FindControl<TextBlock>("TempatLahir");
-            
+
             TanggalLahir = this.FindControl<TextBlock>("TanggalLahir");
-            
-            JenisKelamin = this.FindControl<TextBlock>("JenisKelanin");
-            
+
+            JenisKelamin = this.FindControl<TextBlock>("JenisKelamsin");
+
             GolonganDarah = this.FindControl<TextBlock>("GolonganDarah");
-            
+
             Alamat = this.FindControl<TextBlock>("Alamat");
-            
+
             Agama = this.FindControl<TextBlock>("Agama");
-            
+
             StatusPerkawinan = this.FindControl<TextBlock>("StatusPerkawinan");
-            
+
             Pekerjaan = this.FindControl<TextBlock>("Pekerjaan");
-            
+
             Kewarganegaraan = this.FindControl<TextBlock>("Kewarganegaraan");
 
             // Initialize the AlgorithmButton property
@@ -296,7 +296,7 @@ namespace GUI
             // Update the TextBlock controls with the highestMatchPercentage and the execution time
             Percentage.Text = $"Match Percentage: {highestMatchPercentage:F2}%";
             Time.Text = $"Execution Time: {executionTime.TotalMilliseconds} ms";
-            
+
             foreach (List<string> data in biodata)
             {
                 string nama = BahasaAlay.AlayToOriginal(data[1]);
