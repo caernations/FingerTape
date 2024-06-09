@@ -63,6 +63,8 @@ Run the project using the following command:
 dotnet run
 ```
 
+Or you can run the project using Visual Studio by opening the project file `GUI.sln` and running the project. Using debug mode is recommended.
+
 ## Authors
 
 Created by
