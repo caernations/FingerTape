@@ -42,7 +42,7 @@ git clone https://github.com/caernations/Tubes3_TheTorturedInformaticsDepartment
 Navigate to the project directory using the following command:
 
 ```bash
-cd src
+cd src/GUI
 ```
 
 Build the project using the following command:
