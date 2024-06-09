@@ -306,5 +306,15 @@ namespace GUI
             // Show the FingerPanel
             FingerPanel.IsVisible = true;
         }
+        
+        private void Person_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            // Hide all other panels
+            HomePanel.IsVisible = false;
+            FingerPanel.IsVisible = false;
+
+            // Show the AboutUsPanel
+            AboutUsPanel.IsVisible = true;
+        }
     }
 }
