@@ -13,8 +13,8 @@ public class BoyerMoore
 
     private int[] BuildLast(string pattern)
     {
-        int[] last = new int[128];
-        for (int i = 0; i < 128; i++)
+        int[] last = new int[128 * 2];
+        for (int i = 0; i < 128 * 2; i++)
         {
             last[i] = -1;
         }
