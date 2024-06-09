@@ -40,6 +40,26 @@ namespace GUI
             // Initialize the Time property
             Time = this.FindControl<TextBlock>("Time");
 
+            Nama = this.FindControl<TextBlock>("Nama");
+            
+            TempatLahir = this.FindControl<TextBlock>("TempatLahir");
+            
+            TanggalLahir = this.FindControl<TextBlock>("TanggalLahir");
+            
+            JenisKelamin = this.FindControl<TextBlock>("JenisKelanin");
+            
+            GolonganDarah = this.FindControl<TextBlock>("GolonganDarah");
+            
+            Alamat = this.FindControl<TextBlock>("Alamat");
+            
+            Agama = this.FindControl<TextBlock>("Agama");
+            
+            StatusPerkawinan = this.FindControl<TextBlock>("StatusPerkawinan");
+            
+            Pekerjaan = this.FindControl<TextBlock>("Pekerjaan");
+            
+            Kewarganegaraan = this.FindControl<TextBlock>("Kewarganegaraan");
+
             // Initialize the AlgorithmButton property
             AlgorithmButton = this.FindControl<SplitButton>("AlgorithmButton");
 
@@ -261,24 +281,6 @@ namespace GUI
             names.Add(nama_db);
             BahasaAlay regex = new BahasaAlay(names);
             List<List<string>> biodata = DB.GetBiodata();
-            foreach (List<string> data in biodata)
-            {
-                string nama = BahasaAlay.AlayToOriginal(data[1]);
-
-                if (regex.GetMostSimilarOriginalName(nama) == nama_db)
-                {
-                    Console.WriteLine("Nama: " + regex.GetMostSimilarOriginalName(nama));
-                    Console.WriteLine("Tempat Lahir: " + data[2]);
-                    Console.WriteLine("Tanggal Lahir: " + data[3]);
-                    Console.WriteLine("Jenis Kelamin: " + data[4]);
-                    Console.WriteLine("Golongan Darah: " + data[5]);
-                    Console.WriteLine("Alamat: " + data[6]);
-                    Console.WriteLine("Agama: " + data[7]);
-                    Console.WriteLine("Status Perkawinan: " + data[8]);
-                    Console.WriteLine("Pekerjaan: " + data[9]);
-                    Console.WriteLine("Kewarganegaraan: " + data[10]);
-                }
-            }
 
             var endTime = DateTime.Now;
             var executionTime = endTime - startTime;
@@ -294,6 +296,35 @@ namespace GUI
             // Update the TextBlock controls with the highestMatchPercentage and the execution time
             Percentage.Text = $"Match Percentage: {highestMatchPercentage:F2}%";
             Time.Text = $"Execution Time: {executionTime.TotalMilliseconds} ms";
+            
+            foreach (List<string> data in biodata)
+            {
+                string nama = BahasaAlay.AlayToOriginal(data[1]);
+
+                if (regex.GetMostSimilarOriginalName(nama) == nama_db)
+                {
+                    Console.WriteLine("Nama: " + regex.GetMostSimilarOriginalName(nama));
+                    Nama.Text = "Nama:\n" + regex.GetMostSimilarOriginalName(nama);
+                    Console.WriteLine("Tempat Lahir: " + data[2]);
+                    TempatLahir.Text = "Tempat Lahir:\n" + data[2];
+                    Console.WriteLine("Tanggal Lahir: " + data[3]);
+                    TanggalLahir.Text = "Tanggal Lahir:\n" + data[3];
+                    Console.WriteLine("Jenis Kelamin: " + data[4]);
+                    JenisKelamin.Text = "Jenis Kelamin:\n" + data[4];
+                    Console.WriteLine("Golongan Darah: " + data[5]);
+                    GolonganDarah.Text = "Golongan Darah:\n" + data[5];
+                    Console.WriteLine("Alamat: " + data[6]);
+                    Alamat.Text = "Alamat:\n" + data[6];
+                    Console.WriteLine("Agama: " + data[7]);
+                    Agama.Text = "Agama:\n" + data[7];
+                    Console.WriteLine("Status Perkawinan: " + data[8]);
+                    StatusPerkawinan.Text = "Status Perkawinan:\n" + data[8];
+                    Console.WriteLine("Pekerjaan: " + data[9]);
+                    Pekerjaan.Text = "Pekerjaan:\n" + data[9];
+                    Console.WriteLine("Kewarganegaraan: " + data[10]);
+                    Kewarganegaraan.Text = "Kewarganegaraan:\n" + data[10];
+                }
+            }
         }
 
 
