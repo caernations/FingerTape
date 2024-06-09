@@ -46,7 +46,7 @@ namespace GUI
 
             TanggalLahir = this.FindControl<TextBlock>("TanggalLahir");
 
-            JenisKelamin = this.FindControl<TextBlock>("JenisKelamsin");
+            JenisKelamin = this.FindControl<TextBlock>("JenisKelamin");
 
             GolonganDarah = this.FindControl<TextBlock>("GolonganDarah");
 
