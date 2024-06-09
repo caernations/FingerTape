@@ -9,7 +9,12 @@ using System.Text;
 
 public class BahasaAlay
 {
-    private static List<string> OriginalNames = new List<string> { "Bintang Dwi Marthen", "Bernardus Willson", "Tricya", "TaylorSwift" };
+    private List<string> OriginalNames;
+
+    public BahasaAlay(List<string> originalNames)
+    {
+        OriginalNames = originalNames;
+    }
     private static readonly Dictionary<string, List<string>> characterReplacements = new Dictionary<string, List<string>>()
     {
         {"a", new List<string> {"4", "A", "a"}},
@@ -104,7 +109,7 @@ public class BahasaAlay
         return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(convertedText.ToLower());
     }
 
-    public static string GetMostSimilarOriginalName(string convertedText)
+    public string GetMostSimilarOriginalName(string convertedText)
     {
         int ComputeLevenshteinDistance(string a, string b)
         {

@@ -157,6 +157,7 @@ namespace GUI
 
             double highestMatchPercentage = 0;
             string highestMatchImagePath = null;
+            string highestMatchImagePathOriginal = null;
 
             var startTime = DateTime.Now;
 
@@ -243,6 +244,7 @@ namespace GUI
                     {
                         highestMatchPercentage = similarityPercentage;
                         highestMatchImagePath = imagePath;
+                        highestMatchImagePathOriginal = path;
                         Console.WriteLine($"New highest match percentage: {highestMatchPercentage:F2}%");
                     }
                 }
@@ -251,22 +253,30 @@ namespace GUI
                     Console.WriteLine($"An error occurred while processing the image at {imagePath}: {ex.Message}");
                 }
 
-                List<List<string>> biodata = DB.GetBiodata();
-                foreach (List<string> data in biodata)
+
+            }
+
+            string nama_db = DB.GetNamaFromPath(highestMatchImagePathOriginal);
+            List<string> names = new List<string>();
+            names.Add(nama_db);
+            BahasaAlay regex = new BahasaAlay(names);
+            List<List<string>> biodata = DB.GetBiodata();
+            foreach (List<string> data in biodata)
+            {
+                string nama = BahasaAlay.AlayToOriginal(data[1]);
+
+                if (regex.GetMostSimilarOriginalName(nama) == nama_db)
                 {
-                    if (BahasaAlay.AlayToOriginal(data[1]) == DB.GetNamaFromPath(highestMatchImagePath))
-                    {
-                        Console.WriteLine("Nama: " + data[1]);
-                        Console.WriteLine("Tempat Lahir: " + data[2]);
-                        Console.WriteLine("Tanggal Lahir: " + data[3]);
-                        Console.WriteLine("Jenis Kelamin: " + data[4]);
-                        Console.WriteLine("Golongan Darah: " + data[5]);
-                        Console.WriteLine("Alamat: " + data[6]);
-                        Console.WriteLine("Agama: " + data[7]);
-                        Console.WriteLine("Status Perkawinan: " + data[8]);
-                        Console.WriteLine("Pekerjaan: " + data[9]);
-                        Console.WriteLine("Kewarganegaraan: " + data[10]);
-                    }
+                    Console.WriteLine("Nama: " + regex.GetMostSimilarOriginalName(nama));
+                    Console.WriteLine("Tempat Lahir: " + data[2]);
+                    Console.WriteLine("Tanggal Lahir: " + data[3]);
+                    Console.WriteLine("Jenis Kelamin: " + data[4]);
+                    Console.WriteLine("Golongan Darah: " + data[5]);
+                    Console.WriteLine("Alamat: " + data[6]);
+                    Console.WriteLine("Agama: " + data[7]);
+                    Console.WriteLine("Status Perkawinan: " + data[8]);
+                    Console.WriteLine("Pekerjaan: " + data[9]);
+                    Console.WriteLine("Kewarganegaraan: " + data[10]);
                 }
             }
 
@@ -306,7 +316,7 @@ namespace GUI
             // Show the FingerPanel
             FingerPanel.IsVisible = true;
         }
-        
+
         private void Person_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             // Hide all other panels
