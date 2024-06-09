@@ -39,10 +39,16 @@ Clone the project using the following command:
 git clone https://github.com/caernations/Tubes3_TheTorturedInformaticsDepartment.git
 ```
 
+Load the dump file into the database using the following command:
+
+```bash
+mysql -u root -p < TheTorturedInformaticsDepartment.sql
+```
+
 Navigate to the project directory using the following command:
 
 ```bash
-cd src/GUI
+cd GUI/GUI
 ```
 
 Build the project using the following command:

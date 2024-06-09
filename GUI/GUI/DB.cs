@@ -8,7 +8,7 @@ public class DB
 {
     public static void InsertSidikJari(string path, string name)
     {
-        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
+        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=;";
 
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -41,7 +41,7 @@ public class DB
 
     public static void InsertIdentitas(string NIK, string nama_alay, string tempat_lahir, string tanggal_lahir, string jenis_kelamin, string golongan_darah, string alamat, string agama, string status_perkawinan, string pekerjaan, string kewarganegaraan)
     {
-        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
+        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=;";
 
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -83,7 +83,7 @@ public class DB
 
     public static string GetNamaFromPath(string path)
     {
-        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
+        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=;";
         string query = "SELECT nama FROM sidik_jari WHERE berkas_citra = @path"; // Replace 'your_table' and 'name' with your actual table and column names
 
         using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -107,7 +107,7 @@ public class DB
 
     public static List<List<string>> GetBiodata()
     {
-        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
+        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=;";
         string query = "SELECT * FROM biodata";
         List<List<string>> finalBiodata = new List<List<string>>();
 
@@ -161,7 +161,7 @@ public class DB
 
     public static List<string> SelectAllPaths()
     {
-        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=456088;";
+        string connectionString = "Server=localhost;Database=tubes3stima;User ID=root;Password=;";
         string query = "SELECT berkas_citra FROM sidik_jari";
         List<string> paths = new List<string>();
 
