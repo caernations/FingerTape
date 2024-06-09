@@ -90,7 +90,7 @@
                             </Grid>
                         </StackPanel>
                         <StackPanel Name="FingerPanel">
-                            <Grid ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto">
+                            <Grid ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto">
                                 <Border Grid.Row="0" 
                                         Grid.Column="0"
                                         Width="200"
@@ -102,12 +102,21 @@
                                         <Image Name="SelectedImage" /> 
                                     </Grid>
                                 </Border>
-                                <Button Grid.Row="1" 
+                                <TextBlock x:Name="Percentage"
+                                           Grid.Row="1" 
+                                           Grid.Column="1"
+                                           TextAlignment="Center"
+                                           Foreground="Black"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           Margin="15,15,0,0"
+                                           FontFamily="{StaticResource MerriweatherFont}"/>
+                                <Button Grid.Row="2" 
                                         Grid.Column="0"
                                         Background="#FFF200"
                                         Width="120"
                                         Height="40"
-                                        Margin="59,60,0,0"
+                                        Margin="59,30,0,0"
                                         CornerRadius="30"
                                         Foreground="Black"
                                         HorizontalContentAlignment="Center"
@@ -116,7 +125,15 @@
                                         Click="SelectImageButton_Click">
                                     Select Image
                                 </Button>
-                                    
+                                <TextBlock x:Name="Time" 
+                                           Grid.Row="2" 
+                                           Grid.Column="1"
+                                           TextAlignment="Center"
+                                           Foreground="Black"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           Margin="15,0,0,0"
+                                           FontFamily="{StaticResource MerriweatherFont}"/>
                                 <Border Grid.Row="0" 
                                         Grid.Column="1"
                                         Width="200"
@@ -124,15 +141,18 @@
                                         Background="#D6E6F2"
                                         Margin="15,15,0,0"
                                         CornerRadius="30">
-                                    
+                                    <Grid>
+                                        <Image Name="ResultImage" /> 
+                                    </Grid>
                                 </Border>
-                                <SplitButton Grid.Row="1" 
+                                
+                                <SplitButton Grid.Row="2" 
                                              Grid.Column="1"
                                              Background="#FFF200"
                                              Height="40"
                                              Width="165"
                                              CornerRadius="10,10,10,10"
-                                             Margin="35,60,0,0"
+                                             Margin="35,30,0,0"
                                              Foreground="Black"
                                              x:Name="AlgorithmButton"
                                              HorizontalContentAlignment="Center"
@@ -153,9 +173,90 @@
                                         Background="#D6E6F2"
                                         Margin="15,15,0,0"
                                         CornerRadius="30">
-                                    
+                                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                                        <TextBlock x:Name="Nama"
+                                                   Grid.Row="0" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,20,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="TempatLahir"
+                                                   Grid.Row="1" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="TanggalLahir"
+                                                   Grid.Row="2" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="JenisKelamin"
+                                                   Grid.Row="3" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="GolonganDarah"
+                                                   Grid.Row="4" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="Alamat"
+                                                   Grid.Row="5" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="Agama"
+                                                   Grid.Row="6" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="StatusPerkawinan"
+                                                   Grid.Row="7" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="Pekerjaan"
+                                                   Grid.Row="8" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                        <TextBlock x:Name="Kewarganegaraan"
+                                                   Grid.Row="9" 
+                                                   TextAlignment="Left"
+                                                   Foreground="Black"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="20,0,0,0"
+                                                   FontFamily="{StaticResource MerriweatherFont}"/>
+                                    </Grid>
                                 </Border>
-                                <Button Grid.Row="1"
+                                <Button Grid.Row="2"
                                         Grid.Column="2"
                                         Background="#FFF200"
                                         Width="120"
@@ -165,7 +266,8 @@
                                         CornerRadius="30"
                                         Foreground="Black"
                                         FontFamily="{StaticResource MerriweatherFont}"
-                                        Margin="59,60,0,0">
+                                        Margin="59,30,0,0"
+                                        Click="SubmitButton_Click">
                                     Submit
                                 </Button>
                             </Grid>
@@ -201,14 +303,33 @@
                                                 Background="#F5F5F5"
                                                 CornerRadius="30"
                                                 Margin="0,10">
-                                            
+                                            <Image Source="Assets/panji.png"/>
                                         </Border>
                                         <Border Grid.Row="1" 
                                                 Width="180"
                                                 Height="130"
                                                 Background="#FFF200"
                                                 CornerRadius="30">
-                                            
+                                            <Grid RowDefinitions="Auto,Auto"
+                                                  VerticalAlignment="Center">
+                                                <TextBlock Grid.Row="0" 
+                                                           TextAlignment="Center"
+                                                           Foreground="#303481"
+                                                           FontSize="14"
+                                                           VerticalAlignment="Center"
+                                                           FontFamily="{StaticResource MerriweatherFont}">
+                                                    Satriadhikara Panji
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="1" 
+                                                           TextAlignment="Center"
+                                                           Foreground="#303481"
+                                                           FontSize="14"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,5,0,0"
+                                                           FontFamily="{StaticResource MerriweatherFont}">
+                                                    "cut off sama coding"
+                                                </TextBlock>
+                                            </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -233,7 +354,26 @@
                                                 Height="130"
                                                 Background="#FFF200"
                                                 CornerRadius="30">
-                                            
+                                            <Grid RowDefinitions="Auto,Auto"
+                                                  VerticalAlignment="Center">
+                                                <TextBlock Grid.Row="0" 
+                                                           TextAlignment="Center"
+                                                           Foreground="#303481"
+                                                           FontSize="14"
+                                                           VerticalAlignment="Center"
+                                                           FontFamily="{StaticResource MerriweatherFont}">
+                                                    Yasmin Farisah Salma
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="1" 
+                                                           TextAlignment="Center"
+                                                           Foreground="#303481"
+                                                           FontSize="14"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,5,0,0"
+                                                           FontFamily="{StaticResource MerriweatherFont}">
+                                                    "e4"
+                                                </TextBlock>
+                                            </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -258,7 +398,26 @@
                                                 Height="130"
                                                 Background="#FFF200"
                                                 CornerRadius="30">
-                                            
+                                            <Grid RowDefinitions="Auto,Auto"
+                                                  VerticalAlignment="Center">
+                                                <TextBlock Grid.Row="0" 
+                                                           TextAlignment="Center"
+                                                           Foreground="#303481"
+                                                           FontSize="14"
+                                                           VerticalAlignment="Center"
+                                                           FontFamily="{StaticResource MerriweatherFont}">
+                                                    Farrel Natha Saskoro
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="1" 
+                                                           TextAlignment="Center"
+                                                           Foreground="#303481"
+                                                           FontSize="14"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,5,0,0"
+                                                           FontFamily="{StaticResource MerriweatherFont}">
+                                                    "semoga lulus beneran"
+                                                </TextBlock>
+                                            </Grid>
                                         </Border>
                                     </Grid>
                                 </Border>
